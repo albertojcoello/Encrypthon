@@ -1,15 +1,13 @@
-def encrypt (input):
+def decrypt (input):
     # Modules
-    from random import seed, randint, shuffle
+    from random import seed, shuffle
+    
+    # Indentify the seed (the seven first characters)
+    seed_raw = input[0:7]
+    seed_int = int(seed_raw)
     
     # Allowed characters
     from characters import char
-    
-    # Create a seed to known how to shuffle characters
-    seed_int = randint(1, 1000000)
-    seed_str = str(seed_int)
-    while len(seed_str) < 7:
-        seed_str = '0' + seed_str
     
     # Create a new list whith character position chanted
     seed(seed_int)
@@ -20,14 +18,14 @@ def encrypt (input):
     output = ''
     for i in input:
         if i in char:
-            position = char.index(i)
-            new_character = char_shuffle[position]
+            position = char_shuffle.index(i)
+            new_character = char[position]
             output = output + new_character
         else:
             output = output + i
     
-    # Add the seed to the output (at the begining)
-    output = seed_str + output
+    # Delete the seed in the output
+    output = output[7:len(output)]
     
     # Return output
     return(output)
